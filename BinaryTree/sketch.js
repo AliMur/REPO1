@@ -1,7 +1,6 @@
 class Node{
-	constructor(val,level){
+	constructor(val){
 		this.value = val;
-		this.level = level;
 		this.left = null;
 		this.right = null;
 	}
@@ -9,15 +8,15 @@ class Node{
 	addChild(val){
 		if(val <= this.value){
 			if(this.left == null){
-				this.left = new Node(val,this.level+1);
+				this.left = new Node(val);
 			}else{
-				this.left.addChild(val,this.level+1);
+				this.left.addChild(val);
 			}
 		}else{
 			if(this.right == null){
-				this.right = new Node(val,this.level+1);
+				this.right = new Node(val);
 			}else{
-				this.right.addChild(val,this.level+1);
+				this.right.addChild(val);
 			}
 		}
 	}
@@ -51,7 +50,7 @@ class BinaryTree {
   
   addNode(val){
 	  if(this.root == null){
-		  this.root = new Node(val,0);
+		  this.root = new Node(val);
 	  }else{
 		  this.root.addChild(val); 
 	  }
@@ -82,8 +81,9 @@ class BinaryTree {
   }
   
   // in-order traversal iterative approach
-  printSorted(){
+  getSorted(){
 	  var stack = [];
+	  var sorted = [];
 	  var getLefts = function(node){
 		  if(node==null){
 			  return;
@@ -97,13 +97,14 @@ class BinaryTree {
 			if(currentNode == null){
 				continue;
 			}
-			currentNode.print();
+			sorted.push(currentNode.value);
 			// add the right node and also all nodes left to it
 			getLefts(currentNode.right);
 		}
+		return sorted;
   }
   
-  // draw
+  // draw in p5 js
   draw(height, width,radius=20){
 	  var buf = 5;
 	  var que = [];
@@ -154,19 +155,28 @@ class BinaryTree {
   
 }
 
+function getNRandomArr(n){
+	var arr = [];
+	for(var i=0;i<n;i++){
+		arr.push( Math.floor(Math.random()*100) );
+	}
+	return arr;
+}
+
 var tree;
-var arr = [10,15,7,18,9,22,5,13,8,5,33,12,99,167,20,30,11]
+//var arr = [10,15,7,18,9,22,5,13,8,5,33,12,99,167,20,30,11]
 var canvasSize = 900;
 function setup() {
-	createCanvas(canvasSize, canvasSize/*, WEBGL*/);
+	var arr = getNRandomArr(15);
+	createCanvas(canvasSize, canvasSize);
 	tree = new BinaryTree();
 	for(var i=0;i<arr.length;i++){
 		tree.addNode(arr[i]);
 	}
 	//tree.print_bf();
 	//tree.print();
-	console.log(arr);
-	tree.printSorted();
+	console.log("array : "+arr);
+	console.log("sorted : "+ tree.getSorted());
 	//console.log(tree.search(18));
 	noLoop();
 }
