@@ -157,32 +157,34 @@ class BinaryTree {
 
 function getNRandomArr(n){
 	var arr = [];
-	for(var i=0;i<n;i++){
+	for(var i=0;i<=n;i++){
 		arr.push( Math.floor(Math.random()*100) );
 	}
 	return arr;
 }
 
 var tree;
-//var arr = [10,15,7,18,9,22,5,13,8,5,33,12,99,167,20,30,11]
+var arr;
 var canvasSize = 900;
 function setup() {
-	var arr = getNRandomArr(15);
+	arr = getNRandomArr(15);
 	createCanvas(canvasSize, canvasSize);
 	tree = new BinaryTree();
-	for(var i=0;i<arr.length;i++){
-		tree.addNode(arr[i]);
-	}
 	//tree.print_bf();
 	//tree.print();
 	console.log("array : "+arr);
-	console.log("sorted : "+ tree.getSorted());
+	//console.log("sorted : "+ tree.getSorted());
 	//console.log(tree.search(18));
-	noLoop();
+	frameRate(1);
 }
 
 function draw() {
 	background('#efefef');
+	if(frameCount < arr.length){
+		tree.addNode(arr[frameCount]);
+	}else{
+		noLoop();
+	}
 	tree.draw(canvasSize,canvasSize);
 }
 
