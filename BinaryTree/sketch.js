@@ -180,8 +180,8 @@ function setup() {
 
 function draw() {
 	background('#efefef');
-	if(frameCount < arr.length){
-		tree.addNode(arr[frameCount]);
+	if(frameCount <= arr.length){
+		tree.addNode(arr[frameCount-1]);
 	}else{
 		noLoop();
 	}
